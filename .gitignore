@@ -1,0 +1,5 @@
+credentials
+node_modules
+app.log
+.env
+transactions.db

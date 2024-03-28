@@ -1,0 +1,27 @@
+{
+  "name": "tron-wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
+    "@noble/secp256k1": "^2.0.0",
+    "api": "^6.1.1",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "esm": "^3.2.25",
+    "googleapis": "^105.0.0",
+    "node-telegram-bot-api": "^0.65.1",
+    "sqlite3": "^5.1.7",
+    "tronweb": "3.2.6"
+  },
+  "devDependencies": {
+    "tronweb-typings": "^1.0.1"
+  }
+}
