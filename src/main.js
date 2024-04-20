@@ -12,6 +12,8 @@ const {
   getLastTransactionsFromDatabase,
 } = require('./database');
 
+const { deleteOldTransactions } = require('./cleanup'); 
+const cron = require('node-cron'); 
 const TelegramNotifier = require('./telegramNotifier');
 const telegramToken = process.env.TELEGRAM_TOKEN;
 const telegramChatId = process.env.TELEGRAM_CHAT_ID;
@@ -71,11 +73,11 @@ async function processTransactions() {
   try {
     const balance = await getUsdtBalance(walletAddress);
     console.log(`USDT баланс кошелька ${walletAddress}: ${balance}`);
-    logToFile(`USDT баланс кошелька ${walletAddress}: ${balance}`);
+    // logToFile(`USDT баланс кошелька ${walletAddress}: ${balance}`);
 
     const accountInfo = await getAccountInfo(walletAddress);
     console.log(`Информация о счете ${walletAddress}:`, accountInfo);
-    logToFile(`Информация о счете ${walletAddress}: ${JSON.stringify(accountInfo)}`);
+    // logToFile(`Информация о счете ${walletAddress}: ${JSON.stringify(accountInfo)}`);
 
     const lastTransactions = await getLastTransactionsFromDatabase(MIN_USDT_AMOUNT);
 
@@ -157,6 +159,7 @@ function startProcessing() {
   initDatabase();
   setInterval(getLastTransactions, INTERVAL_DELAY);
   setInterval(processTransactions, INTERVAL_DELAY);
+  cron.schedule('0 3 * * 0', () => deleteOldTransactions()); // Каждое воскресенье в 3:00 удаляем старые записи
 }
 
 startProcessing();
