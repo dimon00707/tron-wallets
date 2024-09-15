@@ -48,6 +48,11 @@ async function getLastTransactions() {
     transactions.sort((a, b) => new Date(b.block_timestamp) - new Date(a.block_timestamp));
 
     for (const transaction of transactions) {
+      const symbol = transaction.token_info.symbol;
+      if (symbol !== 'USDT') {
+        continue;
+      }
+
       const transactionId = transaction.transaction_id;
       const fromAddress = transaction.from;
       const toAddress = transaction.to;
